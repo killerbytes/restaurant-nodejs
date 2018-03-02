@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+  div.container
+    div.d-flex
+      h1.display-4 #{title}
+
+    table.table
+      tr
+        th Name
+        th 
+      each item in carts
+        tr
+          td
+            a(href=`/admin/carts/${item.id}`)=item.customer.name
+          td=item.checkout

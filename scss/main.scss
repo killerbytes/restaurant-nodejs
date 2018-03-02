@@ -1,0 +1,29 @@
+@import "custom";
+@import "node_modules/bootstrap/scss/bootstrap.scss";
+
+html{
+  font-size: 75%
+}
+body{
+}
+
+header{
+  background: #EEE;
+  z-index: 1020;
+  position: sticky;
+}
+
+.sidenav{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  .sidebar{
+    position: fixed;
+    height: 100vh;
+    top: 56px;
+  }
+}
+
+table{
+}

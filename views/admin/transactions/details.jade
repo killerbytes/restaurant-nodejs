@@ -1,0 +1,25 @@
+extends ../layout
+
+block content
+  div.container
+    div.d-flex
+      h1.display-4 #{title}
+      a.btn.btn-primary.ml-auto.align-self-center(href='/admin/transactions') Back
+    
+    a(href=`/admin`) #{transaction.cart.customer.name}
+    div Notes: #{transaction.notes}
+    div Discount #{transaction.discount} Amount: #{transaction.amount} Total Due: #{transaction.total_amount} 
+    div Order Time: #{ locals.format(transaction.cart.created_at, 'YYYY-MM-DD h:mm:ss A')}
+    div Checked Out Time: #{ locals.format(transaction.created_at, 'YYYY-MM-DD h:mm:ss A')}
+    table.table
+      tr
+        th Name
+        th Quantity
+        th Price
+
+      each item in transaction.cart.orders
+        tr
+          td #{item.product.name}
+          td #{item.quantity}
+          td #{item.amount}
+

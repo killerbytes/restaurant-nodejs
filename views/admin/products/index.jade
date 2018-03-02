@@ -1,0 +1,21 @@
+extends ../layout
+
+block content
+  div.container
+    div.d-flex
+      h1.display-4 #{title}
+      a.btn.btn-primary.ml-auto.align-self-center(href='/admin/users/new') Create
+    table.table
+      tr
+        th Name
+        th Quantity
+        th Price
+      each item in products
+        tr
+          td
+            a(href=`/admin/products/${item.id}`) #{item.name}
+          td=item.quantity
+          td=item.price
+          td
+            a(href=`/admin/categories/${item.category.id}`) #{item.category.name}
+

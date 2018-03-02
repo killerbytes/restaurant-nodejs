@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+  div.container
+    div.d-flex
+      h1.display-4 #{title}
+
+    table.table
+      tr
+        th Name
+        th Date
+        th Cashier
+        th Discount
+        th Amount
+        th Total Amount
+      each item in transactions
+        tr
+          td
+            a(href=`/admin/transactions/${item.id}`) #{item.cart.customer.name}
+          td #{ locals.format(item.created_at, "YYYY-MM-DD h:mm:ss A")}
+          td=item.user.username          
+          td=item.discount
+          td=item.amount
+          td=item.total_amount
+
+      tr
+        td
+        td
+        td
+        th #{discount}
+        th #{amount}
+        th #{total_amount}

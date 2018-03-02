@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  div.container
+    div.d-flex
+      h1.display-4 #{title}
+      a.btn.btn-primary.ml-auto.align-self-center(href='/admin/users/new') Create
+    table.table
+      tr
+        th Username
+        th Name
+        th Role
+        th Email
+        th Status
+      each item in users
+        tr
+          td 
+            a(href=`/admin/users/${item.id}`) #{item.username}
+          td=item.name
+          td=item.roles
+          td=item.email
+          td=item.active
+

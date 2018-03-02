@@ -1,0 +1,40 @@
+{
+  "name": "restaurant-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migration": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all",
+    "build-css": "node-sass --include-path scss scss/main.scss   public/css/main.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\"",
+    "start-js": "nodemon --inspect --trace-warnings --exec babel-node -- app.js",
+    "all": "npm-run-all -p watch-css start-js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "body-parser": "^1.18.2",
+    "bootstrap": "^4.0.0",
+    "connect-ensure-login": "^0.1.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "date-fns": "^1.29.0",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.0.2",
+    "jade": "^1.11.0",
+    "method-override": "^2.3.10",
+    "mysql2": "^1.5.2",
+    "node-sass": "^4.7.2",
+    "nodemon": "^1.15.1",
+    "npm-run-all": "^4.1.2",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "sequelize": "^4.34.1",
+    "sequelize-cli": "^4.0.0"
+  }
+}
