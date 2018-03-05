@@ -1,23 +1,22 @@
 var express = require('express');
 var router = express.Router();
 
-var cartsController = require('../../controllers/carts')
-var ordersController = require('../../controllers/orders')
-var customersController = require('../../controllers/customers')
+var cartsController = require('../controllers/carts')
+var ordersController = require('../controllers/orders')
+var customersController = require('../controllers/customers')
+var utils = require('../utils')
 
 router.get('/', function(req, res, next) {
   cartsController.list().then(carts=>{
-    res.render('admin/carts', {carts})
+    res.render('carts', {title: 'Active Carts', carts})
   })
 });
 
 router.get('/:id', function(req, res, next) {
   cartsController.get(req.params.id)
   .then(cart=>{
-    const total_due = cart.orders.reduce((acc, cur)=>{
-      return parseFloat(acc.amount || acc) + (parseFloat(cur.amount) * cur.quantity)
-    })
-    res.render('admin/carts/details', {cart, total_due})
+    const total = utils.getTotals(cart.orders)
+    res.render('carts/details', {cart, total})
   })
 });
 
@@ -44,6 +43,12 @@ router.post('/', function(req, res, next) {
 
 });
 
+router.get('/:id/void/:order_id', function(req, res, next) {
+  cartsController.get(req.params.id)
+  .then(cart=>{
+    res.render('carts/void', {cart})
+  })
+});
 
 
 module.exports = router;

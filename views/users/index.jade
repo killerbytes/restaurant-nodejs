@@ -4,7 +4,7 @@ block content
   div.container
     div.d-flex
       h1.display-4 #{title}
-      a.btn.btn-primary.ml-auto.align-self-center(href='/admin/users/new') Create
+      a.btn.btn-primary.ml-auto.align-self-center(href='/users/new') Create
     table.table
       tr
         th Username
@@ -15,7 +15,7 @@ block content
       each item in users
         tr
           td 
-            a(href=`/admin/users/${item.id}`) #{item.username}
+            a(href=`/users/${item.id}`) #{item.username}
           td=item.name
           td=item.roles
           td=item.email

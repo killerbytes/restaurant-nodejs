@@ -16,12 +16,13 @@ const home = require('./routes/home');
 const shop = require('./routes/shop');
 const auth = require('./routes/auth');
 
-const adminIndex = require('./routes/admin/index');
-const users = require('./routes/admin/users');
-const products = require('./routes/admin/products');
-const categories = require('./routes/admin/categories');
-const transactions = require('./routes/admin/transactions');
-const carts = require('./routes/admin/carts');
+const adminIndex = require('./routes/index');
+const users = require('./routes/users');
+const products = require('./routes/products');
+const categories = require('./routes/categories');
+const transactions = require('./routes/transactions');
+const carts = require('./routes/carts');
+const orders = require('./routes/orders');
 
 const utilsAPI = require('./routes/api/utils');
 const categoriesAPI = require('./routes/api/categories');
@@ -78,12 +79,13 @@ app.use('/shop', shop)
 //   req.logout()
 //   res.redirect('/')
 // })
-app.use('/admin/', adminIndex)
-app.use('/admin/products', products)
-app.use('/admin/categories', categories)
-app.use('/admin/users', users)
-app.use('/admin/transactions', transactions)
-app.use('/admin/carts', carts)
+app.use('/', adminIndex)
+app.use('/products', products)
+app.use('/categories', categories)
+app.use('/users', users)
+app.use('/transactions', transactions)
+app.use('/carts', carts)
+app.use('/orders', orders)
 
 app.use('/api/categories', categoriesAPI)
 app.use('/api/products', productsAPI)
@@ -113,6 +115,8 @@ app.use(function(err, req, res, next) {
 
 var port = process.env.PORT || 8000;
 
-app.listen(port, () => console.log(`listening on port ${port}!`))
+if(!module.parent){ 
+  app.listen(port, () => console.log(`listening on port ${port}!`))
+}
 
 module.exports = app;

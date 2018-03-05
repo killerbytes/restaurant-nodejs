@@ -11,10 +11,10 @@ module.exports = {
       discount: {
         type: Sequelize.DECIMAL, allowNull: false, defaultValue: 0
       },
-      amount: {
+      total_price: {
         type: Sequelize.DECIMAL, allowNull: false
       },
-      total_amount: {
+      total_amount_due: {
         type: Sequelize.DECIMAL, allowNull: false
       },
       notes: {

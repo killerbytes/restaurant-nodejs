@@ -13,25 +13,23 @@ router.get('/', function(req, res, next) {
 
 router.get('/:id', function(req, res, next) {
   cartsController.get(req.params.id)
-  .then(table=>{
-    res.send({item: table})
+  .then(cart=>{
+    if(cart ===null){
+      res.status(404).send()
+    }
+    res.send({item: cart})
   })
 });
 
 router.post('/', function(req, res, next) {
   const {name, orders} = req.body
-
   customersController.create(name)
   .then(customer=>{
 
     cartsController.create(req.body, customer.id)
     .then(cart=>{
   
-      const orderPromise = orders.map(order => {
-        return ordersController.create(order, cart.id)
-      });
-
-      Promise.all(orderPromise)
+      ordersController.create(orders, cart.id)
       .then(order=>{
         res.send({item: cart})
       })
@@ -40,6 +38,27 @@ router.post('/', function(req, res, next) {
   })
 
 });
+
+router.patch('/:id/customer', function(req, res, next){
+  const {name, table_id} = req.body
+  Promise.all([
+    cartsController.list(),
+    cartsController.get(req.params.id)  
+  ])
+    .then(all=>{
+      const [carts, cart] = all
+      const exists = carts.find(i=> i.table_id === table_id)
+
+      if(exists){
+        res.status(400).send() // Cart is active
+      }else{
+        cart.customer.updateAttributes({name})
+        cart.updateAttributes({table_id}).then(cart=>{
+          res.send({item: cart})
+        })
+      }
+    })
+})
 
 
 

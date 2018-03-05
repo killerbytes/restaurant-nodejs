@@ -4,7 +4,7 @@ block content
   div.container
     div.d-flex
       h1.display-4 #{title}
-      a.btn.btn-primary.ml-auto.align-self-center(href='/admin/users/new') Create
+      a.btn.btn-primary.ml-auto.align-self-center(href='/users/new') Create
     
     table.table
       tr
@@ -14,7 +14,7 @@ block content
       each item in products
         tr
           td
-            a(href=`/admin/products/${item.id}`) #{item.name}
+            a(href=`/products/${item.id}`) #{item.name}
           td #{item.quantity}
           td #{item.price}
 

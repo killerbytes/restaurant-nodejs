@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   cart.associate = function(models){
+    cart.hasMany(models.order, {as: 'void'})
     cart.hasMany(models.order)
     cart.belongsTo(models.customer)
     cart.belongsTo(models.table)

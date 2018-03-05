@@ -17,11 +17,13 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  ordersController.create(req.body)
-  .then(table=>{
-    res.send({item: table})
+  const {orders, cart_id} = req.body
+  ordersController.create(orders, cart_id)
+  .then(orders=>{
+    res.send({items: orders})
   })
 });
+
 
 
 

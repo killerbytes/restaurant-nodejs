@@ -4,8 +4,8 @@ block content
   div.container
     div.d-flex
       h1.display-4 #{title}
-      a.btn.btn-primary.ml-auto.align-self-center(href='/admin/users/new') Create
+      a.btn.btn-primary.ml-auto.align-self-center(href='/users/new') Create
     
-    a(href=`/admin/categories/${product.category.id}`) #{product.category.name}
+    a(href=`/categories/${product.category.id}`) #{product.category.name}
     div #{product.name}, #{product.price}, #{product.quantity} 
     img(src="#{product.photo}")

@@ -16,17 +16,17 @@ block content
       each item in transactions
         tr
           td
-            a(href=`/admin/transactions/${item.id}`) #{item.cart.customer.name}
+            a(href=`/transactions/${item.id}`) #{item.cart.customer.name}
           td #{ locals.format(item.created_at, "YYYY-MM-DD h:mm:ss A")}
           td=item.user.username          
           td=item.discount
-          td=item.amount
-          td=item.total_amount
+          td=item.total_price
+          td=item.total_amount_due
 
       tr
-        td
-        td
-        td
+        th
+        th
+        th Total
         th #{discount}
-        th #{amount}
-        th #{total_amount}
+        th #{price}
+        th #{amount_due}

@@ -4,7 +4,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('products', [{
       name: "Homemade Chicken Nuggets ",
-      price: 100,
+      price: 130,
       quantity: 30,
       category_id: 4,
       created_at: "2017-11-14 06:06:01",
@@ -13,7 +13,7 @@ module.exports = {
       },
       {
       name: "Chicken Fingers ",
-      price: 100,
+      price: 150,
       quantity: 30,
       category_id: 4,
       created_at: "2017-11-14 06:06:01",
@@ -22,7 +22,7 @@ module.exports = {
       },
       {
       name: "Roast Chicken ",
-      price: 100,
+      price: 165,
       quantity: 30,
       category_id: 4,
       created_at: "2017-11-14 06:06:01",
@@ -49,7 +49,7 @@ module.exports = {
       },
       {
       name: "Chicken Supreme Kiev-Style",
-      price: 100,
+      price: 120,
       quantity: 30,
       category_id: 4,
       created_at: "2017-11-14 06:06:01",
@@ -67,7 +67,7 @@ module.exports = {
       },
       {
       name: "Chicken Thighs in Asian Tangerine Marinade",
-      price: 100,
+      price: 135,
       quantity: 30,
       category_id: 4,
       created_at: "2017-11-14 06:06:01",
@@ -93,7 +93,7 @@ module.exports = {
       },
       {
       name: "Beefy Vegetable Soup",
-      price: 80,
+      price: 180,
       quantity: 30,
       category_id: 6,
       created_at: "2017-11-14 06:06:01",
@@ -102,7 +102,7 @@ module.exports = {
       },
       {
       name: "Warm Roasted Vegetable Salad",
-      price: 80,
+      price: 135,
       quantity: 30,
       category_id: 6,
       created_at: "2017-11-14 06:06:01",
@@ -111,7 +111,7 @@ module.exports = {
       },
       {
       name: "10 Minute Vegetable Pasta Sauce",
-      price: 80,
+      price: 75,
       quantity: 30,
       category_id: 6,
       created_at: "2017-11-14 06:06:01",
@@ -129,7 +129,7 @@ module.exports = {
       },
       {
       name: "Autumn Romance Vegetable Stew Provencale",
-      price: 80,
+      price: 60,
       quantity: 30,
       category_id: 6,
       created_at: "2017-11-14 06:06:01",
@@ -138,7 +138,7 @@ module.exports = {
       },
       {
       name: "Bulgur Wheat and Roasted Vegetable Salad",
-      price: 80,
+      price: 85,
       quantity: 30,
       category_id: 6,
       created_at: "2017-11-14 06:06:01",
@@ -147,7 +147,7 @@ module.exports = {
       },
       {
       name: "Herb Vegetable Dip",
-      price: 80,
+      price: 65,
       quantity: 30,
       category_id: 6,
       created_at: "2017-11-14 06:06:01",
@@ -272,7 +272,7 @@ module.exports = {
         },
         {
         name: "Beef Slices With Mushroom Sour Cream Paprika Sauce",
-        price: 140,
+        price: 145,
         quantity: 35,
         created_at: "2017-11-14 06:06:01",
         updated_at: "2017-09-14 14:36:16",
@@ -290,7 +290,7 @@ module.exports = {
         },
         {
         name: "Delicious Scalloped Potato and Ground Beef Casserole",
-        price: 140,
+        price: 130,
         quantity: 35,
         created_at: "2017-11-14 06:06:01",
         updated_at: "2017-09-14 14:36:16",
@@ -299,7 +299,7 @@ module.exports = {
         },
         {
         name: "Steamed Beef With Rice-flour Noodles Recipe",
-        price: 140,
+        price: 160,
         quantity: 35,
         created_at: "2017-11-14 06:06:01",
         updated_at: "2017-09-14 14:36:16",
@@ -308,7 +308,7 @@ module.exports = {
         },
         {
         name: "Curry Beef Short Ribs With Horseradish Sauce",
-        price: 140,
+        price: 145,
         quantity: 35,
         created_at: "2017-11-14 06:06:01",
         updated_at: "2017-09-14 14:36:16",
@@ -335,7 +335,7 @@ module.exports = {
         },
         {
         name: "Beef Braised in Barolo",
-        price: 140,
+        price: 185,
         quantity: 35,
         created_at: "2017-11-14 06:06:01",
         updated_at: "2017-09-14 14:36:16",
@@ -352,7 +352,7 @@ module.exports = {
         photo: ""
         },{
       name: "Pork Adobo Recipe",
-      price: 110,
+      price: 150,
       quantity: 20,
       category_id: 5,
       created_at: "2017-11-14 06:06:01",
@@ -369,8 +369,8 @@ module.exports = {
       photo: "http://img.recipepuppy.com/708578.jpg"
       },
       {
-      name: " Meat Olive Mushroom Gravy Dish Recipe ",
-      price: 110,
+      name: "Meat Olive Mushroom Gravy Dish Recipe",
+      price: 105,
       quantity: 20,
       category_id: 5,
       created_at: "2017-11-14 06:06:01",
@@ -388,7 +388,7 @@ module.exports = {
       },
       {
       name: "Fresh Side Pork Bacon Recipe",
-      price: 110,
+      price: 115,
       quantity: 20,
       category_id: 5,
       created_at: "2017-11-14 06:06:01",
@@ -406,7 +406,7 @@ module.exports = {
       },
       {
       name: "Green Chile Chicken Sausage - Culinary Communion",
-      price: 110,
+      price: 125,
       quantity: 20,
       category_id: 5,
       created_at: "2017-11-14 06:06:01",
@@ -415,7 +415,7 @@ module.exports = {
       },
       {
       name: " Pork Adobo (Filipino Banbeave) Recipe ",
-      price: 110,
+      price: 130,
       quantity: 20,
       category_id: 5,
       created_at: "2017-11-14 06:06:01",
@@ -433,7 +433,7 @@ module.exports = {
       },
       {
       name: "Southern style Pinto beans",
-      price: 110,
+      price: 160,
       quantity: 20,
       category_id: 5,
       created_at: "2017-11-14 06:06:01",
@@ -461,7 +461,7 @@ module.exports = {
       },
       {
       name: "Refreshing Raspberry Drink",
-      price: 70,
+      price: 75,
       quantity: 20,
       category_id: 1,
       created_at: "2017-11-14 06:06:01",
@@ -471,7 +471,7 @@ module.exports = {
       },
       {
       name: "Gold Tea (Alcoholic Drink)",
-      price: 70,
+      price: 60,
       quantity: 20,
       category_id: 1,
       created_at: "2017-11-14 06:06:01",
@@ -481,7 +481,7 @@ module.exports = {
       },
       {
       name: "Frosty Orange Drink",
-      price: 70,
+      price: 85,
       quantity: 20,
       category_id: 1,
       created_at: "2017-11-14 06:06:01",
@@ -491,7 +491,7 @@ module.exports = {
       },
       {
       name: "Drink Mix Jelly",
-      price: 70,
+      price: 75,
       quantity: 20,
       category_id: 1,
       created_at: "2017-11-14 06:06:01",

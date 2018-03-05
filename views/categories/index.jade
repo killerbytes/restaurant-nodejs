@@ -4,9 +4,9 @@ block content
   div.container
     div.d-flex
       h1.display-4 #{title}
-      a.btn.btn-primary.ml-auto.align-self-center(href='/admin/users/new') Create
+      a.btn.btn-primary.ml-auto.align-self-center(href='/users/new') Create
     ul.list-group
       each item in categories
         li.list-group-item
-          a(href=`/admin/categories/${item.id}`) #{item.name}
+          a(href=`/categories/${item.id}`) #{item.name}
 

@@ -1,11 +1,6 @@
-extends layout
+extends ./layout
 
 block content
   div.container
-    h1.display-4 Home
-    p Welcome to #{title}
-  
-    ul.list-group
-      each item in tables
-        li.list-group-item 
-          a(href=`shop/${item.id}` class="btn btn-success btn-lg") #{item.name}
+    div.d-flex
+      h1.display-4 #{title}

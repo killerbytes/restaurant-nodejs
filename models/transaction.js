@@ -2,8 +2,8 @@
 module.exports = (sequelize, DataTypes) => {
   var transaction = sequelize.define('transaction', {
     discount: DataTypes.DECIMAL,
-    amount: DataTypes.DECIMAL,
-    total_amount: DataTypes.DECIMAL,
+    total_price: DataTypes.DECIMAL,
+    total_amount_due: DataTypes.DECIMAL,
     notes: DataTypes.TEXT,
     void: DataTypes.BOOLEAN
   }, {

@@ -6,6 +6,8 @@ const Product = require('../models').product
 const Customer = require('../models').customer
 const User = require('../models').user
 
+const cartsController = require('./carts')
+const utils = require('../utils')
 
 module.exports = {
 
@@ -32,7 +34,10 @@ module.exports = {
           id
         },
         include: [{
-          model: Cart, include: [{model: Customer}, {model: Order, include: [{model: Product}]}]
+          model: Cart, include: [{model: Customer}, 
+            {model: Order, include: [{model: Product}], where: {is_void: false}},
+            {model: Order, as: 'void', include: [{model: Product}], where: {is_void: true}, required: false}
+          ]
         }]
       })
         .then(res=> resolve(res))
@@ -40,19 +45,26 @@ module.exports = {
     })
   },
 
-  create(form){
+  create({discount, total_price, amount_paid, cart_id}){
     return new Promise((resolve, reject)=>{
-      const {amount, discount, total_amount, cart_id} = form
+      cartsController.get(cart_id)
+      .then(res=>{
+        const total = utils.getTotals(res.orders)
+        if(amount_paid == (total.amount_due - discount)){
+          cartsController.checkout(res.id, true)
+          console.log(1)
+          Transaction.create({
+            discount,
+            total_price,
+            total_amount_due: amount_paid,
+            cart_id,
+            user_id: 1
+          })
+          .then(res=> resolve(res))
+          .catch(error=> reject(error))
+        }
 
-      Transaction.create({
-        amount,
-        discount,
-        total_amount,
-        cart_id,
-        user_id: 1
       })
-      .then(res=> resolve(res))
-      .catch(error=> reject(error))
     })
   },
   

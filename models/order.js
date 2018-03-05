@@ -1,9 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var order = sequelize.define('order', {
-    amount: DataTypes.DECIMAL,
+    price: DataTypes.DECIMAL,
     quantity: DataTypes.INTEGER,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    is_void: DataTypes.BOOLEAN
   }, {
     underscored: true
   });

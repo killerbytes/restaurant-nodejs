@@ -1,5 +1,7 @@
 var sequelize = require('sequelize')
 const Order = require('../models').order;
+const Cart = require('../models').cart;
+const Product = require('../models').product;
 
 
 module.exports = {
@@ -16,24 +18,68 @@ module.exports = {
 
   get(id){
     return new Promise((resolve, reject)=>{
-      Order.findById(id)
+      Order.find({
+        where: {
+          id
+        },
+        include: [{model: Product}]
+      })
         .then(res=> resolve(res))
         .catch(error=> reject(error))
     })
   },
 
-  create(form, cart_id){
-    return new Promise((resolve, reject)=>{
-      const {amount, quantity, product_id} = form
-      Order.create({
+  create(orders, cart_id){
+
+    const orderPromise = orders.map(order => {
+      const {price, quantity, is_void, product_id} = order
+
+      return Order.create({
         product_id,
-        amount,
+        price: parseFloat(price),
         quantity,
+        is_void,
         cart_id
       })
-      .then(res=> resolve(res))
-      .catch(error=> reject(error))
-    })
+
+    });
+  
+    return Promise.all(orderPromise)
+      .then(res=> res)
+    
   },
+
+  void(cart_id, order_id, quantity){
+    return Promise.all([
+      Cart.findById(cart_id),
+      Order.findById(order_id)
+    ]).then(res=>{
+      const [cart, order] = res
+      const newQuantity = order.quantity - quantity
+      if(newQuantity > 0){
+        Order.update({
+            quantity: newQuantity
+          },{
+            where: {
+              id: order_id
+            }
+          })
+          .then(order=>order)
+        order.is_void = true
+        order.quantity = quantity
+        this.create([order], cart.id)
+      }else{
+        Order.destroy({
+          where: {
+            id: order_id
+          }
+        })
+        order.is_void = true
+        order.quantity = quantity
+        this.create([order], cart.id)        
+      }
+
+    })
+  }
   
 }

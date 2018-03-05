@@ -9,15 +9,6 @@ router.get('/', function(req, res, next) {
   })
 });
 
-router.get('/:id', function(req, res, next) {
-    productsController.list({
-      category: {id: req.params.id}
-    })
-  .then(results=>{
-    const [category, products] = results
-    res.send({item: category})
-  })
-});
 
 
 

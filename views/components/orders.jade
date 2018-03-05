@@ -1,0 +1,19 @@
+table.table
+  tr
+    th Name
+    th.text-right Quantity
+    th.text-right Price
+    th.text-right Amount Due
+
+  each item in orders
+    tr
+      td #{item.product.name}
+      td.text-right #{item.quantity}
+      td.text-right #{ parseFloat(item.price).toFixed(2)}
+      td.text-right #{(parseFloat(item.price) * item.quantity).toFixed(2)}
+  
+  tr
+    th
+    th
+    th.text-right Total
+    th.text-right #{parseFloat(total_amount_due).toFixed(2)}

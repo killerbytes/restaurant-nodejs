@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      amount: {
+      price: {
         type: Sequelize.DECIMAL, allowNull: false
       },
       quantity: {
@@ -16,6 +16,9 @@ module.exports = {
       },
       status: {
         type: Sequelize.STRING, allowNull: false, defaultValue: 'pending'
+      },
+      is_void: {
+        type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
       },
       created_at: {
         allowNull: false,
