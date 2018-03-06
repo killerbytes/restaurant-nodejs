@@ -10,32 +10,32 @@ router.get('/',
     })
   });
 
-router.get('/new', function(req, res, next) {
-  res.render('users/new', {title: 'Create User'})
-});
+// router.get('/new', function(req, res, next) {
+//   res.render('users/new', {title: 'Create User'})
+// });
 
-router.get('/:id', function(req, res, next) {
-  usersController.get(req.params.id).then(user=>{
-    if(user){
-      res.render('users/detail', {title: 'Create User', user })
-    }else{
-      res.status(404).render('404')
-    }
-  })
-});
+// router.get('/:id', function(req, res, next) {
+//   usersController.get(req.params.id).then(user=>{
+//     if(user){
+//       res.render('users/detail', {title: 'Create User', user })
+//     }else{
+//       res.status(404).render('404')
+//     }
+//   })
+// });
 
-router.put('/:id', function(req, res, next){
-  usersController.update(req.params.id, {status: req.body.status ? true: false }).then(()=>{
-    res.status(202).send()
-  })
-})
+// router.put('/:id', function(req, res, next){
+//   usersController.update(req.params.id, {status: req.body.status ? true: false }).then(()=>{
+//     res.status(202).send()
+//   })
+// })
 
-router.post('/', function(req, res, next) {
-  usersController.create(req.body).then(([user, exists])=>{
+// router.post('/', function(req, res, next) {
+//   usersController.create(req.body).then(([user, exists])=>{
 
-    res.redirect(`users/${user.id}`)
-  })
-});
+//     res.redirect(`users/${user.id}`)
+//   })
+// });
 
 
 module.exports = router;

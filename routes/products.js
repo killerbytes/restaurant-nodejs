@@ -9,9 +9,13 @@ router.get('/', function(req, res, next) {
   })
 });
 
+router.get('/new', function(req, res, next) {
+  res.render('products/new', {title: 'New Product'})
+});
+
 router.get('/:id', function(req, res, next) {
   productsController.get(req.params.id).then(product=>{
-    res.render('products/details', {title: 'All Products', product})
+    res.render('products/details', {title: product.name, product})
   })
 });
 

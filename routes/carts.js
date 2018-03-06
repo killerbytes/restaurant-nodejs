@@ -20,35 +20,28 @@ router.get('/:id', function(req, res, next) {
   })
 });
 
-router.post('/', function(req, res, next) {
-  const {name, orders} = req.body
+// router.post('/', function(req, res, next) {
+//   const {name, orders} = req.body
 
-  customersController.create(name)
-  .then(customer=>{
+//   customersController.create(name)
+//   .then(customer=>{
 
-    cartsController.create(req.body, customer.id)
-    .then(cart=>{
+//     cartsController.create(req.body, customer.id)
+//     .then(cart=>{
   
-      const orderPromise = orders.map(order => {
-        return ordersController.create(order, cart.id)
-      });
+//       const orderPromise = orders.map(order => {
+//         return ordersController.create(order, cart.id)
+//       });
 
-      Promise.all(orderPromise)
-      .then(order=>{
-        res.send({item: cart})
-      })
+//       Promise.all(orderPromise)
+//       .then(order=>{
+//         res.send({item: cart})
+//       })
       
-    })
-  })
+//     })
+//   })
 
-});
-
-router.get('/:id/void/:order_id', function(req, res, next) {
-  cartsController.get(req.params.id)
-  .then(cart=>{
-    res.render('carts/void', {cart})
-  })
-});
+// });
 
 
 module.exports = router;

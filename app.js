@@ -13,7 +13,6 @@ var cors = require('cors');
 
 const usersController = require('./controllers/users');
 const home = require('./routes/home');
-const shop = require('./routes/shop');
 const auth = require('./routes/auth');
 
 const adminIndex = require('./routes/index');
@@ -74,7 +73,6 @@ app.use(function (req, res, next) {
 
 app.use('/', home)
 app.use('/login', auth)
-app.use('/shop', shop)
 // app.use('/logout', (req,res)=>{
 //   req.logout()
 //   res.redirect('/')

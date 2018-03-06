@@ -26,7 +26,7 @@ module.exports = {
     })
   },
   create(form) {
-    const {username, password, email, fullname} = form
+    const {username, password, email, name} = form
     return new Promise((resolve,reject)=>{
 
       User
@@ -38,7 +38,7 @@ module.exports = {
             username: username,
             password: password,
             email: email,
-            fullname: fullname
+            name: name
           }
         })
         .then(res => resolve(res))

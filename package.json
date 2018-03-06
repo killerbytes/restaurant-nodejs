@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test mocha --debug=8001 --exit",
+    "test": "cross-env NODE_ENV=test nyc mocha --debug=8001 --exit",
     "test-migration": "sequelize --env=test db:drop && sequelize --env=test db:create && sequelize --env=test db:migrate && sequelize --env=test db:seed:all && npm run test",
     "migration": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all",
     "build-css": "node-sass --include-path scss scss/main.scss   public/css/main.css",
@@ -43,6 +43,7 @@
     "cross-env": "^5.1.3",
     "dotenv": "^5.0.1",
     "mocha": "^5.0.1",
+    "nyc": "^11.4.1",
     "supertest": "^3.0.0"
   }
 }

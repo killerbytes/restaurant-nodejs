@@ -32,26 +32,6 @@ module.exports = {
     })
   },
 
-  create(form) {
-    const {Productname, password, email, fullname} = form
-    return new Promise((resolve,reject)=>{
-
-      Product
-        .findOrCreate({
-          where: {
-            Productname
-          },
-          defaults: {
-            Productname: Productname,
-            password: password,
-            email: email,
-            fullname: fullname
-          }
-        })
-        .then(res => resolve(res))
-        .catch(error => reject(error));
-    })
-  },
   get(id){
     return new Promise((resolve, reject)=>{
       Product.findOne({
@@ -66,14 +46,7 @@ module.exports = {
       .catch(error=> reject(error))
     })
   },
-  check: function(Productname, password, cb) {
-    Product.findOne({where: {Productname}}).then(item=>{
-      if (!item) { return cb(null, false); }
-      if (item.password != password) { return cb(null, false); }
-      return cb(null, item);
-
-    })
-  },
+  
   getMenu(){
     return new Promise((resolve, reject)=>{
       

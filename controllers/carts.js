@@ -34,7 +34,7 @@ module.exports = {
           id
         },
         include: [{
-          model: Order, include: [{model: Product} ], where: {is_void}
+          model: Order, include: [{model: Product} ], where: {is_void}, required: false
         },{
           model: Customer
         }]

@@ -11,6 +11,7 @@ before((done)=>{
 
 let cart_id;
 
+
 describe('/API', ()=>{
   describe('/GET menu request', () => {
     it('it should GET all the menu', (done) => {
@@ -239,7 +240,49 @@ describe('/', ()=>{
     })
   })
 
+  describe('/users',()=>{
+    it('it should show all users', done=>{
+      request(app)
+        .get('/users')
+        .expect('Content-Type', /text\/html/)
+        .expect(200)
+        .expect(/Users/, done)
+        
+    })
+  })
+
+  describe('/products', ()=>{
+    it('it should show all products', done=>{
+      request(app)
+        .get('/products')
+        .expect('Content-Type', /text\/html/)
+        .expect(200)
+        .expect(/All Products/, done)
+        
+    })
+
+    it('it should show a product', done=>{
+      request(app)
+        .get('/products/1')
+        .expect('Content-Type', /text\/html/)
+        .expect(200)
+        .expect(/Homemade Chicken Nuggets/, done)
+        
+    })
+
+    it('it should show a product form', done=>{
+      request(app)
+        .get('/products/new')
+        .expect('Content-Type', /text\/html/)
+        .expect(200)
+        .expect(/New Product/, done)
+        
+    })
+
+  })
+
   describe('GET open carts',()=>{
+
     it('it shows all open carts', (done)=>{
       request(app)
         .get('/carts')
@@ -254,7 +297,47 @@ describe('/', ()=>{
         .expect('Content-Type', /text\/html/)
         .expect(200, done)
     })
+
     
+  })
+
+  describe('GET categories', ()=>{
+    it('it should show all categories', done=>{
+      request(app)
+        .get('/categories')
+        .expect('Content-Type', /text\/html/)
+        .expect(200, done)        
+    })
+
+    it('it should show a category', done=>{
+      request(app)
+        .get('/categories/1')
+        .expect('Content-Type', /text\/html/)
+        .expect(200, done)        
+    })
+
+  })
+
+  describe('GET orders',()=>{
+    
+    it('it shows void order', (done)=>{
+      request(app)
+        .get('/orders/1/void')
+        .expect('Content-Type', /text\/html/)
+        .expect(200, done)
+
+
+    })
+
+    it('it voids the order',(done)=>{
+      request(app)
+        .patch('/orders/1/void')
+        .send({quantity: 1, cart_id: 1})
+        .expect('Content-Type', /text\/plain/)
+        .expect('Location', '/carts/1')
+        .expect(302, done)
+    })
+
   })
 
 
@@ -283,6 +366,14 @@ describe('/', ()=>{
     it('it shows all the transactions',(done)=>{
       request(app)
         .get('/transactions')
+        .expect('Content-Type', /text\/html/)
+        .expect(200)
+        .expect(/Transactions/, done)
+    })
+
+    it('it shows a transaction', done=>{
+      request(app)
+        .get('/transactions/1')
         .expect('Content-Type', /text\/html/)
         .expect(200)
         .expect(/Transactions/, done)
