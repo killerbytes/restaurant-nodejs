@@ -2,7 +2,7 @@
 @import "node_modules/bootstrap/scss/bootstrap.scss";
 
 html{
-  font-size: 75%
+  font-size: 87.5%
 }
 body{
 }
@@ -26,4 +26,11 @@ header{
 }
 
 table{
+  &.table-total{
+    tr:not(:last-child){
+      th,td{
+        border-top: none;
+      }
+    }
+  }
 }

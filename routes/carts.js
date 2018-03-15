@@ -6,19 +6,23 @@ var ordersController = require('../controllers/orders')
 var customersController = require('../controllers/customers')
 var utils = require('../utils')
 
-router.get('/', function(req, res, next) {
-  cartsController.list().then(carts=>{
-    res.render('carts', {title: 'Active Carts', carts})
+router.get('/', function (req, res, next) {
+  cartsController.list().then(carts => {
+    res.render('carts', { title: 'Active Carts', carts })
   })
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', function (req, res, next) {
   cartsController.get(req.params.id)
-  .then(cart=>{
-    const total = utils.getTotals(cart.orders)
-    res.render('carts/details', {cart, total})
-  })
+    .then(cart => {
+      const total = utils.getTotals(cart.orders)
+      res.render('carts/details', { cart, total })
+    })
 });
+
+router.patch('/:id', function (req, res, next) {
+  cartsController.update(req.param.id, req.body)
+})
 
 // router.post('/', function(req, res, next) {
 //   const {name, orders} = req.body
@@ -28,7 +32,7 @@ router.get('/:id', function(req, res, next) {
 
 //     cartsController.create(req.body, customer.id)
 //     .then(cart=>{
-  
+
 //       const orderPromise = orders.map(order => {
 //         return ordersController.create(order, cart.id)
 //       });
@@ -37,7 +41,7 @@ router.get('/:id', function(req, res, next) {
 //       .then(order=>{
 //         res.send({item: cart})
 //       })
-      
+
 //     })
 //   })
 

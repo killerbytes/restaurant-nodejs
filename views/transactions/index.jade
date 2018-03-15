@@ -12,21 +12,21 @@ block content
         th Cashier
         th Discount
         th Amount
-        th Total Amount
+        th Total
       each item in transactions
         tr
           td
             a(href=`/transactions/${item.id}`) #{item.cart.customer.name}
           td #{ locals.format(item.created_at, "YYYY-MM-DD h:mm:ss A")}
           td=item.user.username          
-          td=item.discount
-          td=item.total_price
-          td=item.total_amount_due
+          td #{currency(item.discount).format()}
+          td #{currency(item.total_price).format()}
+          td #{currency(item.total_amount_due).format()}
 
       tr
         th
         th
         th Total
-        th #{discount}
-        th #{price}
-        th #{amount_due}
+        th #{total.discount}
+        th #{total.total_price}
+        th #{total.total_amount_due}

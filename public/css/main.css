@@ -6027,7 +6027,7 @@ a.text-dark:hover, a.text-dark:focus {
     border: 1px solid #ddd !important; } }
 
 html {
-  font-size: 75%; }
+  font-size: 87.5%; }
 
 header {
   background: #EEE;
@@ -6043,3 +6043,6 @@ header {
     position: fixed;
     height: 100vh;
     top: 56px; }
+
+table.table-total tr:not(:last-child) th, table.table-total tr:not(:last-child) td {
+  border-top: none; }

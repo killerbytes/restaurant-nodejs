@@ -1,5 +1,11 @@
-$(function(){
-  $('.quantity').click(function(){
+$(function () {
+  const socket = io()
+  console.log(socket)
+  socket.on('notify_order', function (msg) {
+    console.log(msg)
+  })
+
+  $('.quantity').click(function () {
     const order_id = this.dataset.id
     const cart_id = this.dataset.cart_id
     $.ajax({

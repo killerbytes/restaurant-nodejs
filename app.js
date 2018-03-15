@@ -9,9 +9,11 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override')
 var validator = require('express-validator');
 var cors = require('cors');
-
+var EventEmitter = require("events").EventEmitter;
+var ee = new EventEmitter();
 
 const usersController = require('./controllers/users');
+const notificationEvents = require('./controllers/notifications');
 const home = require('./routes/home');
 const auth = require('./routes/auth');
 
@@ -30,29 +32,33 @@ const tablesAPI = require('./routes/api/tables');
 const ordersAPI = require('./routes/api/orders');
 const cartsAPI = require('./routes/api/carts');
 const transactionsAPI = require('./routes/api/transactions');
+const app = express();
+const http = require('http').Server(app)
+const io = require('socket.io')(http);
 
+require('./utils/socket').initialize(io)
 
 
 passport.use(new Strategy({
-},usersController.check));
-passport.serializeUser(function(user, cb) {
+}, usersController.check));
+passport.serializeUser(function (user, cb) {
   cb(null, user.id);
 });
 
-passport.deserializeUser(function(id, cb) {
-  usersController.get(id).then(user=>{
+passport.deserializeUser(function (id, cb) {
+  usersController.get(id).then(user => {
     cb(null, user);
   })
 });
 
-  
-var app = express();
+
 
 app.locals.format = require('date-fns').format
+app.locals.currency = require('currency.js')
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
+app.set('socketio', io)
 app.use(flash());
 app.use(bodyParser.json());
 app.use(methodOverride('_method'))
@@ -94,14 +100,14 @@ app.use('/api/carts', cartsAPI)
 app.use('/api/transactions', transactionsAPI)
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -113,8 +119,10 @@ app.use(function(err, req, res, next) {
 
 var port = process.env.PORT || 8000;
 
-if(!module.parent){ 
-  app.listen(port, () => console.log(`listening on port ${port}!`))
-}
+notificationEvents(io)
 
+if (!module.parent) {
+  http.listen(port, () => console.log(`listening on port ${port}!`))
+}
+module.exports.socketio = io
 module.exports = app;

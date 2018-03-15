@@ -11,6 +11,9 @@ module.exports = {
       checkout: {
         type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
       },
+      is_checkout: {
+        type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE

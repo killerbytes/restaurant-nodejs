@@ -11,13 +11,18 @@ block content
     div Order Time: #{ locals.format(transaction.cart.created_at, 'YYYY-MM-DD h:mm:ss A')}
     div Checked Out Time: #{ locals.format(transaction.created_at, 'YYYY-MM-DD h:mm:ss A')}
     - var orders = transaction.cart.orders
-    - var total_price = total.price
-    - var total_amount_due = total.amount_due
     include ../components/orders
 
-    div Amount: #{transaction.total_price} 
-    div Discount #{transaction.discount} 
-    div Total Amount Due: #{transaction.total_amount_due} 
+    table.table.table-total
+      tr
+        td
+        td.text-right Discount
+        td.text-right #{currency(transaction.discount).format()} 
+      tr
+        td
+        th.text-right Total Amount Due
+        th.text-right #{total.amount_due} 
+
 
     if transaction.cart.void.length
       button(data-toggle="collapse" data-target="#void" class="btn" ) Voided
