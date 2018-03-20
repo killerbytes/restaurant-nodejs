@@ -20,26 +20,25 @@ router.get('/:id', function (req, res, next) {
 
 
 router.post('/', function (req, res, next) {
-  const { discount, total_price, amount_paid, cart_id } = req.body
-  const amount_due = parseFloat(total_price) - discount
-  if (amount_paid >= amount_due) {
-    transactionsController.create({
-      discount,
-      total_price,
-      amount_paid,
-      cart_id,
-    }).then(item => {
+  const { discount, amount_paid, cart_id } = req.body
+  transactionsController.create({
+    discount,
+    amount_paid,
+    cart_id,
+  })
+    .then(item => {
       res.send({ item })
       socket.notify({ type: 'GET_CARTS' })
     })
-  } else {
-    res.send({
-      error: {
-        status: 401,
-        message: 'Insufficient Paid Amount'
-      }
+    .catch(err => {
+      console.log(err)
+      res.status(400).send({
+        error: {
+          status: 400,
+          message: err.message
+        }
+      })
     })
-  }
 
 })
 

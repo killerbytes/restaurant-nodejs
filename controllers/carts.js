@@ -3,6 +3,7 @@ const Cart = require('../models').cart;
 const Order = require('../models').order;
 const Customer = require('../models').customer;
 const Product = require('../models').product;
+const User = require('../models').user;
 
 
 module.exports = {
@@ -34,7 +35,7 @@ module.exports = {
           id
         },
         include: [
-          { model: Order, include: [{ model: Product }], where: { is_void }, required: false },
+          { model: Order, include: [{ model: Product }, { model: User }], where: { is_void }, required: false },
           { model: Order, as: 'void', include: [{ model: Product }], where: { is_void: true }, required: false },
 
           { model: Customer }

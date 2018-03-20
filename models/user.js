@@ -8,12 +8,13 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     active: DataTypes.BOOLEAN
   }, {
-    underscored: true
-  });
+      underscored: true
+    });
 
-  user.associate = function(models){
+  user.associate = function (models) {
     user.hasMany(models.transaction)
+    user.hasMany(models.order)
   }
-  
+
   return user;
 };

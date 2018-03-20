@@ -47,23 +47,27 @@ module.exports = {
     })
   },
 
-  create({ discount, total_price, amount_paid, cart_id }) {
+  create({ discount, amount_paid, cart_id }) {
     return new Promise((resolve, reject) => {
       cartsController.get(cart_id)
         .then(res => {
-          const total = utils.getTotals(res.orders)
-          if (amount_paid >= (total.amount_due - discount)) {
-            cartsController.checkout(res.id, true)
-            console.log(1)
+          const total_amount_due = res.total - discount
+          if (amount_paid >= total_amount_due) {
             Transaction.create({
               discount,
-              total_price,
-              total_amount_due: total_price,
+              total_price: res.total,
+              total_amount_due: total_amount_due,
               cart_id,
               user_id: 1
             })
-              .then(res => resolve(res))
+              .then(res => {
+                cartsController.checkout(res.id, true)
+                return resolve(res)
+              })
               .catch(error => reject(error))
+          } else {
+            reject(new Error('Insufficient amount paid'))
+
           }
 
         })

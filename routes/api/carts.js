@@ -34,6 +34,8 @@ router.post('/', function (req, res, next) {
           ordersController.create(orders, cart.id)
             .then(order => {
               res.send({ item: cart })
+              socket.notify({ type: 'GET_CARTS' })
+
             })
 
         })
@@ -59,12 +61,13 @@ router.patch('/:id/customer', function (req, res, next) {
       const [carts, cart] = all
       const exists = carts.find(i => i.table_id === table_id)
 
-      if (exists) {
+      if (exists && table_id) {
         res.status(400).send() // Cart is active
       } else {
         cart.customer.updateAttributes({ name })
         cart.updateAttributes({ table_id }).then(cart => {
           res.send({ item: cart })
+          socket.notify({ type: 'GET_CARTS' })
         })
       }
     })

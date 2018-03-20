@@ -14,24 +14,14 @@ var ee = new EventEmitter();
 
 const usersController = require('./controllers/users');
 const notificationEvents = require('./controllers/notifications');
-const home = require('./routes/home');
-const auth = require('./routes/auth');
 
-const adminIndex = require('./routes/index');
-const users = require('./routes/users');
-const products = require('./routes/products');
-const categories = require('./routes/categories');
-const transactions = require('./routes/transactions');
-const carts = require('./routes/carts');
-const orders = require('./routes/orders');
-
-const utilsAPI = require('./routes/api/utils');
-const categoriesAPI = require('./routes/api/categories');
-const productsAPI = require('./routes/api/products');
-const tablesAPI = require('./routes/api/tables');
-const ordersAPI = require('./routes/api/orders');
-const cartsAPI = require('./routes/api/carts');
-const transactionsAPI = require('./routes/api/transactions');
+const utils = require('./routes/api/utils');
+const categories = require('./routes/api/categories');
+const products = require('./routes/api/products');
+const tables = require('./routes/api/tables');
+const orders = require('./routes/api/orders');
+const carts = require('./routes/api/carts');
+const transactions = require('./routes/api/transactions');
 const app = express();
 const http = require('http').Server(app)
 const io = require('socket.io')(http);
@@ -77,27 +67,18 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/', home)
-app.use('/login', auth)
 // app.use('/logout', (req,res)=>{
 //   req.logout()
 //   res.redirect('/')
 // })
-app.use('/', adminIndex)
-app.use('/products', products)
-app.use('/categories', categories)
-app.use('/users', users)
-app.use('/transactions', transactions)
-app.use('/carts', carts)
-app.use('/orders', orders)
 
-app.use('/api/categories', categoriesAPI)
-app.use('/api/products', productsAPI)
-app.use('/api/utils', utilsAPI)
-app.use('/api/tables', tablesAPI)
-app.use('/api/orders', ordersAPI)
-app.use('/api/carts', cartsAPI)
-app.use('/api/transactions', transactionsAPI)
+app.use('/api/categories', categories)
+app.use('/api/products', products)
+app.use('/api/utils', utils)
+app.use('/api/tables', tables)
+app.use('/api/orders', orders)
+app.use('/api/carts', carts)
+app.use('/api/transactions', transactions)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

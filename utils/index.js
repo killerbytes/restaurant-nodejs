@@ -3,15 +3,8 @@ const currency = require('currency.js')
 module.exports = {
   getTotals(orders) {
     return orders.map(i => ({ price: i.price, quantity: i.quantity })).reduce((acc, cur) => {
-      return {
-        price: currency(acc.price).add(cur.price).format(),
-        amount_due: currency(acc.amount_due).add(parseFloat(cur.price) * cur.quantity).format()
-      }
-
-    }, {
-        price: 0,
-        amount_due: 0
-      })
+      return currency(acc).add(parseFloat(cur.price) * cur.quantity).value
+    }, 0)
   },
   getTransactionTotals(orders) {
     return orders.map(i => ({ total_price: i.total_price, discount: i.discount })).reduce((acc, cur) => {

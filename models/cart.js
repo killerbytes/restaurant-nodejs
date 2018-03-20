@@ -1,10 +1,17 @@
 'use strict';
+const utils = require('../utils')
+
 module.exports = (sequelize, DataTypes) => {
   var cart = sequelize.define('cart', {
     checkout: DataTypes.BOOLEAN,
     is_checkout: DataTypes.BOOLEAN
   }, {
-      underscored: true
+      underscored: true,
+      getterMethods: {
+        total: function () {
+          return utils.getTotals(this.orders);
+        }
+      }
     });
 
   cart.associate = function (models) {
