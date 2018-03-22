@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true,
       getterMethods: {
         total: function () {
-          return utils.getTotals(this.orders);
+          return this.orders ? utils.getTotals(this.orders) : 0;
         }
       }
     });

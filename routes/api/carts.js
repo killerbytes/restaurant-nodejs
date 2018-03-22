@@ -43,19 +43,13 @@ router.post('/', function (req, res, next) {
 
 });
 
-router.patch('/:id', function (req, res, next) {
-  cartsController.update(req.params.id, req.body)
-    .then(cart => {
-      res.send({ item: cart })
-      socket.notify({ type: 'GET_CARTS' })
-    })
-})
 
-router.patch('/:id/customer', function (req, res, next) {
-  const { name, table_id } = req.body
+router.patch('/customer', function (req, res, next) {
+  console.log(req.body)
+  const { cart_id, name, table_id } = req.body
   Promise.all([
     cartsController.list(),
-    cartsController.get(req.params.id)
+    cartsController.get(cart_id)
   ])
     .then(all => {
       const [carts, cart] = all
@@ -73,6 +67,13 @@ router.patch('/:id/customer', function (req, res, next) {
     })
 })
 
+router.patch('/:id', function (req, res, next) {
+  cartsController.update(req.params.id, req.body)
+    .then(cart => {
+      res.send({ item: cart })
+      socket.notify({ type: 'GET_CARTS' })
+    })
+})
 
 
 module.exports = router;

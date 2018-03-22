@@ -25,9 +25,8 @@ router.post('/', function (req, res, next) {
     })
 });
 
-router.patch('/:id/void', function (req, res, next) {
-  const order_id = req.params.id
-  const { quantity, cart_id } = req.body
+router.patch('/void', function (req, res, next) {
+  const { order_id, quantity, cart_id } = req.body
   ordersController.void(cart_id, order_id, quantity)
     .then(order => {
       res.send({ item: order })
@@ -35,11 +34,14 @@ router.patch('/:id/void', function (req, res, next) {
 });
 
 
-router.patch('/:id/status', function (req, res, next) {
-  const order_id = req.params.id
-  ordersController.update(order_id, req.body)
-    .then(order => {
-      res.send({ item: order })
+router.patch('/status', function (req, res, next) {
+  const { order_ids } = req.body
+  const promises = order_ids.map(order_id => {
+    return ordersController.update(order_id, req.body)
+  });
+  Promise.all(promises)
+    .then(result => {
+      res.send({ item: result })
       socket.notify({ type: 'GET_CART' })
       socket.notify({ type: 'GET_CARTS' })
     })

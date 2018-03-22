@@ -50,8 +50,8 @@ module.exports = {
 
   },
 
-  update(id, order) {
-    const { quantity, status } = order
+  update(id, fields) {
+    const { quantity, status } = fields
     return Order.update({
       quantity,
       status
