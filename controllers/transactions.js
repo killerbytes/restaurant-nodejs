@@ -51,6 +51,7 @@ module.exports = {
     return new Promise((resolve, reject) => {
       cartsController.get(cart_id)
         .then(res => {
+          if (!res) reject(new Error('Cart not found'))
           const total_amount_due = res.total - discount
           if (amount_paid >= total_amount_due) {
             Transaction.create({
@@ -71,6 +72,7 @@ module.exports = {
           }
 
         })
+        .catch(err => reject(err))
     })
   },
 

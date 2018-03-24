@@ -15,7 +15,6 @@ var ee = new EventEmitter();
 const usersController = require('./controllers/users');
 const notificationEvents = require('./controllers/notifications');
 
-const utils = require('./routes/api/utils');
 const categories = require('./routes/api/categories');
 const products = require('./routes/api/products');
 const tables = require('./routes/api/tables');
@@ -74,7 +73,6 @@ app.use(function (req, res, next) {
 
 app.use('/api/categories', categories)
 app.use('/api/products', products)
-app.use('/api/utils', utils)
 app.use('/api/tables', tables)
 app.use('/api/orders', orders)
 app.use('/api/carts', carts)

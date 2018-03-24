@@ -6,46 +6,60 @@ var ordersController = require('../../controllers/orders')
 var customersController = require('../../controllers/customers')
 var notification = require('../../controllers/notifications')
 var socket = require('../../utils/socket')
+var error = require('../../utils/error')
 
 router.get('/', function (req, res, next) {
-  cartsController.list().then(orders => {
-    res.send({ items: orders, total: orders.length })
-  })
+  cartsController.list()
+    .then(orders => {
+      res.send({ items: orders, total: orders.length })
+    })
+    .catch(err => {
+      res.status(400).send(error.response(400, err.message))
+    })
 });
 
 router.get('/:id', function (req, res, next) {
   cartsController.get(req.params.id)
     .then(cart => {
       if (cart === null) {
-        res.status(404).send()
+        res.status(404).send(error.response(404, 'Cart not found'))
       }
       res.send({ item: cart })
+    })
+    .catch(err => {
+      res.status(400).send(error.response(400, err.message))
     })
 });
 
 router.post('/', function (req, res, next) {
   const { name, orders } = req.body
-  customersController.create(name)
+  var _cart = {}
+
+  customersController
+    .create(name)
     .then(customer => {
+      return cartsController.create(req.body, customer.id)
+    })
+    .then(cart => {
+      _cart = cart
+      return ordersController.create(orders, cart.id)
 
-      cartsController.create(req.body, customer.id)
-        .then(cart => {
+    })
+    .then(order => {
+      socket.notify({ type: 'GET_CARTS' })
+      socket.notify({ type: 'GET_TABLES' })
+      res.send({ item: _cart })
 
-          ordersController.create(orders, cart.id)
-            .then(order => {
-              res.send({ item: cart })
-              socket.notify({ type: 'GET_CARTS' })
+    })
 
-            })
-
-        })
+    .catch(err => {
+      res.status(400).send(error.response(400, err.message))
     })
 
 });
 
 
 router.patch('/customer', function (req, res, next) {
-  console.log(req.body)
   const { cart_id, name, table_id } = req.body
   Promise.all([
     cartsController.list(),
@@ -56,7 +70,7 @@ router.patch('/customer', function (req, res, next) {
       const exists = carts.find(i => i.table_id === table_id)
 
       if (exists && table_id) {
-        res.status(400).send() // Cart is active
+        res.status(400).send(error.response(400, "Table is Active"))
       } else {
         cart.customer.updateAttributes({ name })
         cart.updateAttributes({ table_id }).then(cart => {
@@ -65,6 +79,9 @@ router.patch('/customer', function (req, res, next) {
         })
       }
     })
+    .catch(err => {
+      res.status(400).send(error.response(400, err.message))
+    })
 })
 
 router.patch('/:id', function (req, res, next) {
@@ -72,6 +89,9 @@ router.patch('/:id', function (req, res, next) {
     .then(cart => {
       res.send({ item: cart })
       socket.notify({ type: 'GET_CARTS' })
+    })
+    .catch(err => {
+      res.status(400).send(error.response(400, err.message))
     })
 })
 

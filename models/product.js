@@ -1,16 +1,32 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var product = sequelize.define('product', {
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true,
+        max: 255
+      }
+    },
     description: DataTypes.TEXT,
-    price: DataTypes.DECIMAL,
-    quantity: DataTypes.INTEGER,
+    price: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: true
+      }
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: true
+      }
+    },
     photo: DataTypes.TEXT
   }, {
-    underscored: true
-  });
+      underscored: true
+    });
 
-  product.associate = function(models){
+  product.associate = function (models) {
     product.belongsTo(models.category)
     product.hasMany(models.order)
   }

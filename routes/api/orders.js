@@ -1,3 +1,5 @@
+const error = require('../../utils/error')
+
 var express = require('express');
 var router = express.Router();
 
@@ -13,7 +15,11 @@ router.get('/', function (req, res, next) {
 router.get('/:id', function (req, res, next) {
   ordersController.get(req.params.id)
     .then(table => {
-      res.send({ item: table })
+      if (table) {
+        res.send({ item: table })
+      } else {
+        res.status(404).send(error.response(404, "Order not found"))
+      }
     })
 });
 
@@ -31,20 +37,35 @@ router.patch('/void', function (req, res, next) {
     .then(order => {
       res.send({ item: order })
     })
+    .catch(err => {
+      res.status(400).send(error.response(400, err.message))
+    })
 });
 
 
 router.patch('/status', function (req, res, next) {
   const { order_ids } = req.body
-  const promises = order_ids.map(order_id => {
-    return ordersController.update(order_id, req.body)
-  });
-  Promise.all(promises)
-    .then(result => {
-      res.send({ item: result })
-      socket.notify({ type: 'GET_CART' })
-      socket.notify({ type: 'GET_CARTS' })
-    })
+  try {
+
+    if (Array.isArray(order_ids)) {
+
+      const promises = order_ids.length && order_ids.map(order_id => {
+        return ordersController.update(order_id, req.body)
+      }) || [];
+      Promise.all(promises)
+        .then(result => {
+          res.send({ item: result })
+          socket.notify({ type: 'GET_CART' })
+          socket.notify({ type: 'GET_CARTS' })
+        })
+    } else {
+      res.status(400).send(error.response(400, "Invalid values"))
+    }
+  }
+  catch (err) {
+    res.status(500).send(error.response(500, err.message))
+  }
+
 });
 
 

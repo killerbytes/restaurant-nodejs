@@ -3,8 +3,19 @@ const utils = require('../utils')
 
 module.exports = (sequelize, DataTypes) => {
   var cart = sequelize.define('cart', {
-    checkout: DataTypes.BOOLEAN,
-    is_checkout: DataTypes.BOOLEAN
+    checkout: {
+      type: DataTypes.BOOLEAN,
+      validate: {
+        isBoolean: true
+      }
+    },
+    is_checkout: {
+      type: DataTypes.BOOLEAN,
+      validate: {
+        isBoolean: true
+      }
+
+    }
   }, {
       underscored: true,
       getterMethods: {

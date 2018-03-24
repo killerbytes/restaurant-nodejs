@@ -1,12 +1,37 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var user = sequelize.define('user', {
-    username: DataTypes.STRING,
-    name: DataTypes.STRING,
+    username: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
+    },
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
+    },
     roles: DataTypes.STRING,
-    password: DataTypes.STRING,
-    email: DataTypes.STRING,
-    active: DataTypes.BOOLEAN
+    password: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
+    },
+    active: {
+      type: DataTypes.BOOLEAN,
+      validate: {
+        isBoolean: true
+      }
+    }
   }, {
       underscored: true
     });

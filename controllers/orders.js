@@ -30,8 +30,7 @@ module.exports = {
   },
 
   create(orders, cart_id) {
-
-    const orderPromise = orders.map(order => {
+    const orderPromise = orders.length && orders.map(order => {
       const { price, quantity, is_void, product_id } = order
 
       return Order.create({
@@ -43,10 +42,12 @@ module.exports = {
         user_id: 2,
       })
 
-    });
+    }) || []
 
     return Promise.all(orderPromise)
       .then(res => res)
+      .catch(err => err)
+
 
   },
 

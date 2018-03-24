@@ -1,4 +1,3 @@
-var sequelize = require('sequelize')
 const Cart = require('../models').cart;
 const Order = require('../models').order;
 const Customer = require('../models').customer;

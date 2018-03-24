@@ -5,7 +5,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DECIMAL,
       validate: { isDecimal: true }
     },
-    total_price: DataTypes.DECIMAL,
+    total_price: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: true
+      }
+    },
     total_amount_due: {
       type: DataTypes.DECIMAL,
       validate: {
@@ -13,7 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     notes: DataTypes.TEXT,
-    void: DataTypes.BOOLEAN
+    void: {
+      type: DataTypes.BOOLEAN,
+      validate: {
+        isBoolean: true
+      }
+    }
   }, {
       underscored: true
     });
