@@ -28,6 +28,7 @@ router.post('/', function (req, res, next) {
   ordersController.create(orders, cart_id)
     .then(orders => {
       res.send({ items: orders })
+      socket.notify({ type: 'GET_CARTS' })
     })
 });
 
@@ -36,6 +37,8 @@ router.patch('/void', function (req, res, next) {
   ordersController.void(cart_id, order_id, quantity)
     .then(order => {
       res.send({ item: order })
+      socket.notify({ type: 'GET_CART', payload: cart_id })
+      socket.notify({ type: 'GET_CARTS' })
     })
     .catch(err => {
       res.status(400).send(error.response(400, err.message))
@@ -44,7 +47,7 @@ router.patch('/void', function (req, res, next) {
 
 
 router.patch('/status', function (req, res, next) {
-  const { order_ids } = req.body
+  const { cart_id, order_ids } = req.body
   try {
 
     if (Array.isArray(order_ids)) {
@@ -55,7 +58,7 @@ router.patch('/status', function (req, res, next) {
       Promise.all(promises)
         .then(result => {
           res.send({ item: result })
-          socket.notify({ type: 'GET_CART' })
+          socket.notify({ type: 'GET_CART', payload: cart_id })
           socket.notify({ type: 'GET_CARTS' })
         })
     } else {

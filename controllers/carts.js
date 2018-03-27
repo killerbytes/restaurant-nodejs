@@ -7,19 +7,18 @@ const User = require('../models').user;
 
 module.exports = {
 
-  list(options = { checkout: false }) {
-    const { checkout } = options
+  list(checkout = false, is_void = false) {
     return new Promise((resolve, reject) => {
       Cart
         .findAll({
           where: {
             checkout
           },
-          include: [{
-            model: Order, include: [{ model: Product }]
-          }, {
-            model: Customer
-          }]
+          include: [
+            { model: Order, include: [{ model: Product }, { model: User }], where: { is_void }, required: false },
+            { model: Order, as: 'void', include: [{ model: Product }], where: { is_void: true }, required: false },
+            { model: Customer }
+          ]
         })
         .then(carts => resolve(carts))
         .catch(error => reject(error))

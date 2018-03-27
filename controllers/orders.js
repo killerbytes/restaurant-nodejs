@@ -1,4 +1,5 @@
 var sequelize = require('sequelize')
+const Op = sequelize.Op;
 const Order = require('../models').order;
 const Cart = require('../models').cart;
 const Product = require('../models').product;
@@ -6,10 +7,12 @@ const Product = require('../models').product;
 
 module.exports = {
 
-  list() {
+  list(option) {
+    const config = Object.assign(option, { include: { model: Product } })
+
     return new Promise((resolve, reject) => {
       Order
-        .findAll()
+        .findAll(config)
         .then(res => resolve(res))
         .catch(error => reject(error))
     })

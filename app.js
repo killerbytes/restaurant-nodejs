@@ -21,6 +21,8 @@ const tables = require('./routes/api/tables');
 const orders = require('./routes/api/orders');
 const carts = require('./routes/api/carts');
 const transactions = require('./routes/api/transactions');
+const sales = require('./routes/api/sales');
+
 const app = express();
 const http = require('http').Server(app)
 const io = require('socket.io')(http);
@@ -77,6 +79,7 @@ app.use('/api/tables', tables)
 app.use('/api/orders', orders)
 app.use('/api/carts', carts)
 app.use('/api/transactions', transactions)
+app.use('/api/sales', sales)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -76,6 +76,7 @@ router.patch('/customer', function (req, res, next) {
         cart.updateAttributes({ table_id }).then(cart => {
           res.send({ item: cart })
           socket.notify({ type: 'GET_CARTS' })
+          socket.notify({ type: 'GET_CART', payload: cart_id })
         })
       }
     })
@@ -89,6 +90,7 @@ router.patch('/:id', function (req, res, next) {
     .then(cart => {
       res.send({ item: cart })
       socket.notify({ type: 'GET_CARTS' })
+      socket.notify({ type: 'GET_CART', payload: req.param.id })
     })
     .catch(err => {
       res.status(400).send(error.response(400, err.message))

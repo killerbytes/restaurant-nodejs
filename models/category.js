@@ -6,6 +6,12 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: true
       }
+    },
+    order: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: true
+      }
     }
   }, {
       timestamps: false,
