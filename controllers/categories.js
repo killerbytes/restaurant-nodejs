@@ -24,5 +24,40 @@ module.exports = {
         .catch(error => reject(error))
     })
   },
+  create({ name, order }) {
+    return Category.create({
+      name,
+      order
+    })
+  },
+  update(id, data) {
+    return new Promise((resolve, reject) => {
+      Category
+        .findById(id)
+        .then(item => {
+          item.update(data)
+            .then(res => resolve(res))
+            .catch(error => reject(error))
+        })
+        .catch(error => reject(error))
 
+    })
+  },
+
+  delete(id) {
+    return new Promise((resolve, reject) => {
+
+      Category.findById(id)
+        .then(category => {
+          if (category) {
+            resolve(category.destroy())
+          } else {
+            reject(new Error('Category not found'))
+          }
+        })
+        .catch(err => reject(err))
+    })
+
+
+  }
 }
