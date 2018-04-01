@@ -14,6 +14,7 @@ var ee = new EventEmitter();
 
 const usersController = require('./controllers/users');
 const notificationEvents = require('./controllers/notifications');
+const error = require('./utils/error')
 
 const categories = require('./routes/api/categories');
 const products = require('./routes/api/products');
@@ -83,7 +84,7 @@ app.use('/api/sales', sales)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error('Not Found');
+  var err = new Error('Endpoint does not exists');
   err.status = 404;
   next(err);
 });
@@ -96,7 +97,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send(error.response(err.status, err.message));
 });
 
 var port = process.env.PORT || 8000;

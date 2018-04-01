@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       price: {
-        type: Sequelize.DECIMAL, allowNull: false
+        type: Sequelize.DECIMAL(10, 2), allowNull: false
       },
       quantity: {
         type: Sequelize.INTEGER, allowNull: false

@@ -5,12 +5,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: true,
-        max: 255
+        len: [1, 255]
       }
     },
     description: DataTypes.TEXT,
     price: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(10, 2),
       validate: {
         isDecimal: true
       }
@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     photo: DataTypes.TEXT
   }, {
-      underscored: true
+      underscored: true,
+      paranoid: true
     });
 
   product.associate = function (models) {

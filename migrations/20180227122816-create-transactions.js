@@ -9,13 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       discount: {
-        type: Sequelize.DECIMAL, allowNull: false, defaultValue: 0
+        type: Sequelize.DECIMAL(10, 2), allowNull: false, defaultValue: 0
       },
       total_price: {
-        type: Sequelize.DECIMAL, allowNull: false
+        type: Sequelize.DECIMAL(10, 2), allowNull: false
       },
       total_amount_due: {
-        type: Sequelize.DECIMAL, allowNull: false
+        type: Sequelize.DECIMAL(10, 2), allowNull: false
       },
       notes: {
         type: Sequelize.TEXT
@@ -32,7 +32,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       cart_id: {
-        type: Sequelize.INTEGER, allowNull: false, 
+        type: Sequelize.INTEGER, allowNull: false,
         references: {
           model: 'carts',
           key: 'id'

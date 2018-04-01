@@ -15,7 +15,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       price: {
-        type: Sequelize.DECIMAL, allowNull: false
+        type: Sequelize.DECIMAL(10, 2), allowNull: false
       },
       quantity: {
         type: Sequelize.INTEGER
@@ -34,6 +34,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
+      deleted_at: {
+        type: Sequelize.DATE
+      },
       category_id: {
         type: Sequelize.INTEGER, allowNull: false,
         references: {
@@ -42,7 +45,7 @@ module.exports = {
         }
       },
 
-      
+
     });
   },
   down: (queryInterface, Sequelize) => {

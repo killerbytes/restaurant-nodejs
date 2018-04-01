@@ -18,44 +18,57 @@ module.exports = {
     })
   },
 
-  list({ category = {} }) {
-
-    return new Promise((resolve, reject) => {
-      Product
-        .findAll({
-          include: [
-            { model: Category, where: category },
-          ]
-        })
-        .then(res => resolve(res))
-        .catch(error => reject(error))
-    })
+  list({ category = {} } = {}) {
+    return Product
+      .findAll({
+        include: [
+          { model: Category, where: category },
+        ]
+      })
   },
 
   get(id) {
-    return new Promise((resolve, reject) => {
-      Product.findOne({
-        where: {
-          id
-        },
-        include: [
-          { model: Category }
-        ]
-      })
-        .then(res => resolve(res))
-        .catch(error => reject(error))
+    return Product.findOne({
+      where: {
+        id
+      },
+      include: [
+        { model: Category }
+      ]
     })
   },
 
-  getMenu() {
+  create({ name, description, price, quantity, photo, category_id }) {
+    return Product.create({
+      name,
+      description,
+      price,
+      quantity,
+      photo,
+      category_id
+    })
+  },
+
+  delete(id) {
     return new Promise((resolve, reject) => {
 
-      Category.findAll({
-        order: ['order'],
-        include: [{ model: Product }]
-      })
-        .then(res => resolve(res))
+      Product.findById(id)
+        .then(product => {
+          if (product) {
+            resolve(product.destroy())
+          } else {
+            reject(new Error('Product not found'))
+          }
+        })
         .catch(err => reject(err))
+    })
+
+  },
+
+  getMenu() {
+    return Category.findAll({
+      order: ['order'],
+      include: [{ model: Product }]
     })
   }
 
