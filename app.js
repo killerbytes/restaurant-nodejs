@@ -23,6 +23,7 @@ const orders = require('./routes/api/orders');
 const carts = require('./routes/api/carts');
 const transactions = require('./routes/api/transactions');
 const sales = require('./routes/api/sales');
+const users = require('./routes/api/users');
 
 const app = express();
 const http = require('http').Server(app)
@@ -81,7 +82,7 @@ app.use('/api/orders', orders)
 app.use('/api/carts', carts)
 app.use('/api/transactions', transactions)
 app.use('/api/sales', sales)
-
+app.use('/api/users', users)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Endpoint does not exists');
