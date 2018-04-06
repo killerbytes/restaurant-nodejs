@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       username: {
-        type: Sequelize.STRING, allowNull: false
+        type: Sequelize.STRING, unique: true, allowNull: false
       },
       name: {
         type: Sequelize.STRING, allowNull: false
@@ -19,9 +19,6 @@ module.exports = {
       },
       password: {
         type: Sequelize.STRING, allowNull: false
-      },
-      email: {
-        type: Sequelize.STRING, unique: true, allowNull: false
       },
       active: {
         type: Sequelize.BOOLEAN, allowNull: false, defaultValue: false

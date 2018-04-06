@@ -1,18 +1,19 @@
 var express = require('express');
 var router = express.Router();
+const { isAuthenticated, hasRole } = require('../../utils/auth')
 
 var productsController = require('../../controllers/products')
 const error = require('../../utils/error')
 
 
-router.get('/', function (req, res, next) {
+router.get('/', isAuthenticated, function (req, res, next) {
   productsController.list().then(products => {
     res.send({ items: products, total: products.length })
   })
 });
 
 
-router.post('/', function (req, res, next) {
+router.post('/', isAuthenticated, hasRole('manager'), function (req, res, next) {
   productsController.create(req.body)
     .then(product => {
       res.status(201).send(product)
@@ -22,13 +23,13 @@ router.post('/', function (req, res, next) {
     })
 })
 
-router.get('/by_category', function (req, res, next) {
+router.get('/by_category', isAuthenticated, function (req, res, next) {
   productsController.getMenu().then(products => {
     res.send({ items: products, total: products.length })
   })
 });
 
-router.get('/:id', function (req, res, next) {
+router.get('/:id', isAuthenticated, function (req, res, next) {
   productsController.get(req.params.id)
     .then(product => {
       if (product) {
@@ -44,7 +45,7 @@ router.get('/:id', function (req, res, next) {
 
 });
 
-router.patch('/:id', function (req, res, next) {
+router.patch('/:id', isAuthenticated, hasRole('manager'), function (req, res, next) {
   productsController.update(req.params.id, req.body)
     .then(product => {
       res.status(202).send(product)
@@ -54,7 +55,7 @@ router.patch('/:id', function (req, res, next) {
     })
 })
 
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', isAuthenticated, hasRole('manager'), function (req, res, next) {
   productsController.delete(req.params.id)
     .then(products => {
       res.status(204).send()

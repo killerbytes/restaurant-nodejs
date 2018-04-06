@@ -6,7 +6,12 @@ module.exports = {
   get(id) {
     return new Promise((resolve, reject) => {
       User.findById(id)
-        .then(res => resolve(res))
+        .then(user => {
+          if (!user) {
+            throw { status: 404, message: 'User does not exists' }
+          }
+          return resolve(user)
+        })
         .catch(error => reject(error))
     })
   },
@@ -30,7 +35,7 @@ module.exports = {
           },
           defaults: {
             username: username,
-            password: password,
+            password: User.generateHash(password),
             email: email,
             name: name
           }

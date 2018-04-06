@@ -1,4 +1,5 @@
 const error = require('../../utils/error')
+const { isAuthenticated, hasRole } = require('../../utils/auth')
 
 var express = require('express');
 var router = express.Router();
@@ -6,13 +7,13 @@ var router = express.Router();
 var ordersController = require('../../controllers/orders')
 var socket = require('../../utils/socket')
 
-router.get('/', function (req, res, next) {
+router.get('/', isAuthenticated, function (req, res, next) {
   ordersController.list().then(orders => {
     res.send({ items: orders, total: orders.length })
   })
 });
 
-router.get('/:id', function (req, res, next) {
+router.get('/:id', isAuthenticated, function (req, res, next) {
   ordersController.get(req.params.id)
     .then(table => {
       if (table) {
@@ -23,7 +24,7 @@ router.get('/:id', function (req, res, next) {
     })
 });
 
-router.post('/', function (req, res, next) {
+router.post('/', isAuthenticated, hasRole('manager'), function (req, res, next) {
   const { orders, cart_id } = req.body
   ordersController.create(orders, cart_id)
     .then(orders => {
@@ -32,7 +33,7 @@ router.post('/', function (req, res, next) {
     })
 });
 
-router.patch('/void', function (req, res, next) {
+router.patch('/void', isAuthenticated, hasRole('manager'), function (req, res, next) {
   const { order_id, quantity, cart_id } = req.body
   ordersController.void(cart_id, order_id, quantity)
     .then(order => {
@@ -46,7 +47,7 @@ router.patch('/void', function (req, res, next) {
 });
 
 
-router.patch('/status', function (req, res, next) {
+router.patch('/status', isAuthenticated, hasRole('manager'), function (req, res, next) {
   const { cart_id, order_ids } = req.body
   try {
 

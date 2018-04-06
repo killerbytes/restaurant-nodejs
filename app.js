@@ -24,6 +24,7 @@ const carts = require('./routes/api/carts');
 const transactions = require('./routes/api/transactions');
 const sales = require('./routes/api/sales');
 const users = require('./routes/api/users');
+const auth = require('./routes/api/auth');
 
 const app = express();
 const http = require('http').Server(app)
@@ -33,6 +34,7 @@ require('./utils/socket').initialize(io)
 
 
 passport.use(new Strategy({
+  session: false
 }, usersController.check));
 passport.serializeUser(function (user, cb) {
   cb(null, user.id);
@@ -83,6 +85,7 @@ app.use('/api/carts', carts)
 app.use('/api/transactions', transactions)
 app.use('/api/sales', sales)
 app.use('/api/users', users)
+app.use('/api/auth', auth)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error('Endpoint does not exists');

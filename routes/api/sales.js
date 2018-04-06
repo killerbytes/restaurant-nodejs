@@ -2,13 +2,14 @@ var express = require('express');
 var router = express.Router();
 var sequelize = require('sequelize')
 const Op = sequelize.Op;
+const { isAuthenticated, hasRole } = require('../../utils/auth')
 
 const error = require('../../utils/error')
 
 var ordersController = require('../../controllers/orders')
 var socket = require('../../utils/socket')
 
-router.get('/', function (req, res, next) {
+router.get('/', isAuthenticated, hasRole('manager'), function (req, res, next) {
   ordersController.list({
     where: {
       // status: "complete",

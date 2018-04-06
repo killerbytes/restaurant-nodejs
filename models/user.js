@@ -1,4 +1,6 @@
 'use strict';
+const bcrypt   = require('bcrypt-nodejs');
+
 module.exports = (sequelize, DataTypes) => {
   var user = sequelize.define('user', {
     username: {
@@ -20,12 +22,6 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true
       }
     },
-    email: {
-      type: DataTypes.STRING,
-      validate: {
-        notEmpty: true
-      }
-    },
     active: {
       type: DataTypes.BOOLEAN,
       validate: {
@@ -33,8 +29,25 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   }, {
-      underscored: true
-    });
+    defaultScope: {
+      attributes: { exclude: ['password'] },
+    },
+    scopes: {
+      withPassword: {
+        attributes: { include: ['password'] },
+      }
+    },    
+    underscored: true,
+      
+  });
+
+  user.generateHash = function (password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(), null);
+  }
+  user.prototype.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+  }
+
 
   user.associate = function (models) {
     user.hasMany(models.transaction)

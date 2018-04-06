@@ -1,3 +1,7 @@
+require('dotenv').load();
+const jwt = require('jsonwebtoken')
+const secret_key = process.env.SECRET_KEY
+
 const currency = require('currency.js')
 
 module.exports = {

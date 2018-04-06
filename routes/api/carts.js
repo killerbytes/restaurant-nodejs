@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+const { isAuthenticated, hasRole } = require('../../utils/auth')
 var cartsController = require('../../controllers/carts')
 var ordersController = require('../../controllers/orders')
 var customersController = require('../../controllers/customers')
@@ -8,7 +9,7 @@ var notification = require('../../controllers/notifications')
 var socket = require('../../utils/socket')
 var error = require('../../utils/error')
 
-router.get('/', function (req, res, next) {
+router.get('/', isAuthenticated, function (req, res, next) {
   cartsController.list()
     .then(orders => {
       res.send({ items: orders, total: orders.length })
@@ -18,7 +19,7 @@ router.get('/', function (req, res, next) {
     })
 });
 
-router.get('/:id', function (req, res, next) {
+router.get('/:id', isAuthenticated, function (req, res, next) {
   cartsController.get(req.params.id)
     .then(cart => {
       if (cart === null) {
@@ -31,7 +32,7 @@ router.get('/:id', function (req, res, next) {
     })
 });
 
-router.post('/', function (req, res, next) {
+router.post('/', isAuthenticated, hasRole('user'), function (req, res, next) {
   const { name, orders } = req.body
   var _cart = {}
 
@@ -58,8 +59,7 @@ router.post('/', function (req, res, next) {
 
 });
 
-
-router.patch('/customer', function (req, res, next) {
+router.patch('/customer', isAuthenticated, hasRole('user'), function (req, res, next) {
   const { cart_id, name, table_id } = req.body
   Promise.all([
     cartsController.list(),
@@ -85,7 +85,7 @@ router.patch('/customer', function (req, res, next) {
     })
 })
 
-router.patch('/:id', function (req, res, next) {
+router.patch('/:id', isAuthenticated, hasRole('user'), function (req, res, next) {
   cartsController.update(req.params.id, req.body)
     .then(cart => {
       res.send({ item: cart })

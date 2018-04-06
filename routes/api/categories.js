@@ -1,17 +1,18 @@
 const error = require('../../utils/error')
+const { isAuthenticated, hasRole } = require('../../utils/auth')
 
 var express = require('express');
 var router = express.Router();
 
 var categoriesController = require('../../controllers/categories')
 
-router.get('/', function (req, res, next) {
+router.get('/', isAuthenticated, function (req, res, next) {
   categoriesController.list().then(categories => {
     res.send({ items: categories, total: categories.length })
   })
 });
 
-router.post('/', function (req, res, next) {
+router.post('/', isAuthenticated, hasRole('manager'), function (req, res, next) {
   categoriesController.create(req.body)
     .then(category => {
       res.status(201).send(category)
@@ -21,7 +22,7 @@ router.post('/', function (req, res, next) {
     })
 })
 
-router.get('/:id', function (req, res, next) {
+router.get('/:id', isAuthenticated, function (req, res, next) {
   categoriesController.get(req.params.id)
     .then(category => {
       if (category) {
@@ -32,7 +33,7 @@ router.get('/:id', function (req, res, next) {
     })
 });
 
-router.patch('/:id', function (req, res, next) {
+router.patch('/:id', isAuthenticated, hasRole('manager'), function (req, res, next) {
   categoriesController.update(req.params.id, req.body)
     .then(category => {
       res.status(202).send(category)
@@ -42,7 +43,7 @@ router.patch('/:id', function (req, res, next) {
     })
 })
 
-router.delete('/:id', function (req, res, next) {
+router.delete('/:id', isAuthenticated, hasRole('manager'), function (req, res, next) {
   categoriesController.delete(req.params.id)
     .then(() => {
       res.status(204).send()

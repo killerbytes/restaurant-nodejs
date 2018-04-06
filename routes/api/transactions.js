@@ -1,18 +1,19 @@
 var express = require('express');
 var router = express.Router();
 const error = require('../../utils/error')
+const { isAuthenticated, hasRole } = require('../../utils/auth')
 
 var transactionsController = require('../../controllers/transactions')
 var socket = require('../../utils/socket')
 
-router.get('/', function (req, res, next) {
+router.get('/', isAuthenticated, function (req, res, next) {
   transactionsController.list()
     .then(items => {
       res.send({ items })
     })
 })
 
-router.get('/:id', function (req, res, next) {
+router.get('/:id', isAuthenticated, function (req, res, next) {
   transactionsController.get(req.params.id)
     .then(item => {
       if (item) {
@@ -25,7 +26,7 @@ router.get('/:id', function (req, res, next) {
 })
 
 
-router.post('/', function (req, res, next) {
+router.post('/', isAuthenticated, hasRole('manager'), function (req, res, next) {
   const { discount, amount_paid, cart_id } = req.body
   try {
     transactionsController.create({
