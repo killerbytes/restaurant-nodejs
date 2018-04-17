@@ -47,7 +47,7 @@ router.patch('/void', isAuthenticated, hasRole('manager'), function (req, res, n
 });
 
 
-router.patch('/status', isAuthenticated, hasRole('manager'), function (req, res, next) {
+router.patch('/status', isAuthenticated, hasRole('kitchen'), function (req, res, next) {
   const { cart_id, order_ids } = req.body
   try {
 

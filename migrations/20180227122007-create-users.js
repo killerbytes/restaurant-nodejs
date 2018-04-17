@@ -14,8 +14,8 @@ module.exports = {
       name: {
         type: Sequelize.STRING, allowNull: false
       },
-      roles: {
-        type: Sequelize.STRING
+      role: {
+        type: Sequelize.STRING, defaultValue: 'user'
       },
       password: {
         type: Sequelize.STRING, allowNull: false
@@ -31,7 +31,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-      
+
     });
   },
   down: (queryInterface, Sequelize) => {

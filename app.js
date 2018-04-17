@@ -24,6 +24,7 @@ const carts = require('./routes/api/carts');
 const transactions = require('./routes/api/transactions');
 const sales = require('./routes/api/sales');
 const users = require('./routes/api/users');
+const roles = require('./routes/api/roles');
 const auth = require('./routes/api/auth');
 
 const app = express();
@@ -85,6 +86,7 @@ app.use('/api/carts', carts)
 app.use('/api/transactions', transactions)
 app.use('/api/sales', sales)
 app.use('/api/users', users)
+app.use('/api/roles', roles)
 app.use('/api/auth', auth)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

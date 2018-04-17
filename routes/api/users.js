@@ -6,6 +6,15 @@ var router = express.Router();
 
 var usersController = require('../../controllers/users')
 
+router.get('/profile', isAuthenticated, function (req, res, next) {
+  usersController.get(req.CURRENT_USER.id).then(user => {
+    res.send(user)
+  })
+    .catch(err => {
+      res.status(err.status).send(error.response(err.status, err.message))
+    })
+});
+
 
 router.get('/', isAuthenticated, function (req, res, next) {
   usersController.list().then(users => {

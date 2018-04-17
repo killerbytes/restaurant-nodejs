@@ -19,7 +19,7 @@ module.exports = {
 
 						if (user.validPassword(password)) {
 							const token = jwt.sign({ id: user.id }, secret_key)
-							resolve({ token, roles: user.roles })
+							resolve({ token, role: user.role })
 						} else {
 							throw { status: 400, message: 'Username or password is incorrect' }
 

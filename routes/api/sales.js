@@ -10,13 +10,16 @@ var ordersController = require('../../controllers/orders')
 var socket = require('../../utils/socket')
 
 router.get('/', isAuthenticated, hasRole('manager'), function (req, res, next) {
+  const { date } = req.query
+  const first = date.split('-')
+  const second = date.split('-')
   ordersController.list({
     where: {
       // status: "complete",
       is_void: false,
       updated_at: {
-        [Op.gte]: new Date(2018, 2, 25),
-        [Op.lte]: new Date(2018, 2, 26)
+        [Op.gte]: new Date([first]),
+        [Op.lte]: new Date([second])
       },
     },
   })

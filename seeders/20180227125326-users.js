@@ -5,7 +5,7 @@ module.exports = {
     return queryInterface.bulkInsert('users', [{
       username: 'ironman',
       name: 'Tony Stark',
-      roles: 'user',
+      role: 'waiter',
       password: '$2a$10$FYjXE2j2sqmChFncEYnhQ.XrpAJHZK7tUKqrpusG..RjVXl00JApK',
       active: true,
       created_at: "2017-06-04 02:20:52",
@@ -13,7 +13,7 @@ module.exports = {
     }, {
       username: 'spiderman',
       name: 'Peter Parker',
-      roles: 'user,kitchen',
+      role: 'kitchen',
       password: '$2a$10$FYjXE2j2sqmChFncEYnhQ.XrpAJHZK7tUKqrpusG..RjVXl00JApK',
       active: true,
       created_at: "2017-06-04 02:20:52",
@@ -21,7 +21,7 @@ module.exports = {
     }, {
       username: 'batman',
       name: 'Bruce Wayne',
-      roles: 'user,kitchen,cashier,manager',
+      role: 'cashier',
       password: '$2a$10$FYjXE2j2sqmChFncEYnhQ.XrpAJHZK7tUKqrpusG..RjVXl00JApK',
       active: true,
       created_at: "2017-06-04 02:20:52",
@@ -29,7 +29,7 @@ module.exports = {
     }, {
       username: 'superman',
       name: 'Clark Kent',
-      roles: 'user,kitchen,cashier',
+      role: 'manager',
       password: '$2a$10$FYjXE2j2sqmChFncEYnhQ.XrpAJHZK7tUKqrpusG..RjVXl00JApK',
       active: true,
       created_at: "2017-06-04 02:20:52",

@@ -29,19 +29,17 @@ module.exports = {
     return new Promise((resolve, reject) => {
 
       User
-        .findOrCreate({
-          where: {
-            username
-          },
-          defaults: {
-            username: username,
-            password: User.generateHash(password),
-            email: email,
-            name: name
-          }
+        .create({
+          username: username,
+          password: User.generateHash(password),
+          name: name
         })
-        .then(res => resolve(res))
-        .catch(error => reject(error));
+        .then(res => {
+          resolve(res)
+        })
+        .catch(error => {
+          reject(error.errors[0])
+        });
     })
   },
   update(id, data) {

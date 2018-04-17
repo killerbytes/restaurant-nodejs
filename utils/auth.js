@@ -1,15 +1,44 @@
 require('dotenv').load();
+const currency = require('currency.js')
 const jwt = require('jsonwebtoken')
 const secret_key = process.env.SECRET_KEY
 const userController = require('../controllers/users')
 
-const currency = require('currency.js')
-const isAllowed = (roles, role) => {
-  return roles.split(',')
-    .find(i => i === role) ? true : false
-
+let roles = {
+  user: {},
+  waiter: { extends: ['user'] },
+  kitchen: { extends: ['user'] },
+  cashier: { extends: ['waiter', 'kitchen'] },
+  manager: { extends: ['cashier'] },
+  admin: { extends: ['manager'] }
 }
 
+let mappedRoles = new Map()
+
+function getRoles(role) {
+  var items = []
+  function getExtended(role) {
+    items = [...items, ...[role]]
+    if (roles[role].extends) {
+      roles[role].extends.forEach(item => {
+        getExtended(item)
+      })
+    }
+    return [...new Set(items)]
+  }
+  return getExtended(role)
+}
+
+
+Object.keys(roles).forEach(role => {
+  mappedRoles.set(role, getRoles(role))
+})
+
+function isAllowed(role, user) {
+
+  return mappedRoles.get(user)
+    .find(i => i === role) ? true : false
+}
 
 module.exports = {
   isAuthenticated(req, res, next) {
@@ -19,7 +48,8 @@ module.exports = {
         if (err) {
           throw { status: 401, message: err.message }
         } else {
-          next()
+          req.CURRENT_USER = decoded
+          return next()
         }
       })
     } else {
@@ -34,7 +64,7 @@ module.exports = {
           throw { status: 401, message: err.message }
         } else {
           userController.get(decoded.id).then(user => {
-            const allowed = isAllowed(user.roles, role)
+            const allowed = isAllowed(role, user.role)
             if (allowed) {
               next()
             } else {
