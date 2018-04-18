@@ -2,12 +2,25 @@ var express = require('express');
 var router = express.Router();
 const error = require('../../utils/error')
 const { isAuthenticated, hasRole } = require('../../utils/auth')
+var { addDays } = require('date-fns')
+
+var sequelize = require('sequelize')
+const Op = sequelize.Op;
 
 var transactionsController = require('../../controllers/transactions')
 var socket = require('../../utils/socket')
 
 router.get('/', isAuthenticated, function (req, res, next) {
-  transactionsController.list()
+  const q = req.query
+  let startDate = new Date(parseInt(q.startDate))
+  let endDate = new Date(parseInt(q.endDate))
+  transactionsController.list({
+    where: {
+      created_at: {
+        [Op.between]: [startDate, addDays(endDate, 1)]
+      },
+    },
+  })
     .then(items => {
       res.send({ items })
     })

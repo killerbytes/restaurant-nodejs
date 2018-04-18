@@ -11,16 +11,19 @@ const utils = require('../utils')
 
 module.exports = {
 
-  list() {
+  list(option) {
     return new Promise((resolve, reject) => {
+      const config = Object.assign(option, {
+        include: [{
+          model: Cart, include: [{ model: Customer }]
+        }, {
+          model: User
+        }]
+      })
+
+
       Transaction
-        .findAll({
-          include: [{
-            model: Cart, include: [{ model: Customer }]
-          }, {
-            model: User
-          }]
-        })
+        .findAll(config)
         .then(res => resolve(res))
         .catch(error => reject(error))
     })

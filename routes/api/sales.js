@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var { addDays } = require('date-fns')
 var sequelize = require('sequelize')
 const Op = sequelize.Op;
 const { isAuthenticated, hasRole } = require('../../utils/auth')
@@ -10,16 +11,15 @@ var ordersController = require('../../controllers/orders')
 var socket = require('../../utils/socket')
 
 router.get('/', isAuthenticated, hasRole('manager'), function (req, res, next) {
-  const { date } = req.query
-  const first = date.split('-')
-  const second = date.split('-')
+  const q = req.query
+  let startDate = new Date(parseInt(q.startDate))
+  let endDate = new Date(parseInt(q.endDate))
   ordersController.list({
     where: {
       // status: "complete",
       is_void: false,
-      updated_at: {
-        [Op.gte]: new Date([first]),
-        [Op.lte]: new Date([second])
+      created_at: {
+        [Op.between]: [startDate, addDays(endDate, 1)]
       },
     },
   })
