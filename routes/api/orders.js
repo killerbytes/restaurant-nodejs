@@ -24,7 +24,7 @@ router.get('/:id', isAuthenticated, function (req, res, next) {
     })
 });
 
-router.post('/', isAuthenticated, hasRole('manager'), function (req, res, next) {
+router.post('/', isAuthenticated, hasRole('waiter'), function (req, res, next) {
   const { orders, cart_id } = req.body
   ordersController.create(orders, cart_id)
     .then(orders => {
