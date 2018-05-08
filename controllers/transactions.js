@@ -40,7 +40,7 @@ module.exports = {
           model: User
         }, {
           model: Cart, include: [{ model: Customer },
-          { model: Order, include: [{ model: Product }], where: { is_void: false } },
+          { model: Order, include: [{ model: Product }], where: { is_void: false }, required: false },
           { model: Order, as: 'void', include: [{ model: Product }], where: { is_void: true }, required: false },
           ]
         }]

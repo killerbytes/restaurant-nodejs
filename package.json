@@ -6,6 +6,7 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc mocha --debug=8001 --exit",
     "test-migration": "sequelize --env=test db:drop && sequelize --env=test db:create && sequelize --env=test db:migrate && sequelize --env=test db:seed:all && npm run test",
+    "reset": "sequelize db:drop && sequelize db:create && sequelize db:migrate",
     "migration": "sequelize db:drop && sequelize db:create && sequelize db:migrate && sequelize db:seed:all",
     "build-css": "node-sass --include-path scss scss/main.scss   public/css/main.css",
     "watch-css": "nodemon -e scss -x \"npm run build-css\"",

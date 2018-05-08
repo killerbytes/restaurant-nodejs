@@ -42,6 +42,19 @@ module.exports = {
         });
     })
   },
+  updatePassword(id, password) {
+    return new Promise((resolve, reject) => {
+      User
+        .findById(id)
+        .then(item => {
+          item.updateAttributes({ password: User.generateHash(password) })
+            .then(res => resolve(res))
+            .catch(error => reject(error))
+        })
+        .catch(error => reject(error))
+
+    })
+  },
   update(id, data) {
     return new Promise((resolve, reject) => {
       User

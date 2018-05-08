@@ -42,6 +42,21 @@ router.get('/:id', isAuthenticated, function (req, res, next) {
 
 });
 
+router.patch('/:id/update_password', isAuthenticated, hasRole('waiter'), function (req, res, next) {
+  if (req.CURRENT_USER.id == req.params.id) {
+
+    usersController.updatePassword(req.params.id, req.body.password)
+      .then(user => {
+        res.status(202).send(user)
+      })
+      .catch(err => {
+        res.status(400).send(error.response(400, err.message))
+      })
+  } else {
+    res.status(401).send(error.response(400, 'Not allowed'))
+  }
+})
+
 
 router.patch('/:id', isAuthenticated, hasRole('manager'), function (req, res, next) {
   usersController.update(req.params.id, req.body)
