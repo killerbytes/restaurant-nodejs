@@ -44,6 +44,7 @@ module.exports = {
     })
   },
 
+
   delete(id) {
     return new Promise((resolve, reject) => {
 
@@ -59,5 +60,24 @@ module.exports = {
     })
 
 
-  }
+  },
+
+  sort(ids) {
+    return new Promise((resolve, reject) => {
+      const updates = ids.map((id, index) => {
+        return Category
+          .findById(id)
+          .then(item => {
+            item.updateAttributes({ order: index })
+          })
+      });
+      Promise.all(updates).then(res => {
+        resolve(this.list())
+      }).catch(err => {
+        reject(err)
+      })
+
+    })
+  },
+
 }
