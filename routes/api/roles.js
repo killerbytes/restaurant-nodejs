@@ -6,7 +6,7 @@ const { isAuthenticated } = require('../../utils/auth')
 var rolesController = require('../../controllers/roles')
 
 router.get('/', isAuthenticated, function (req, res, next) {
-  rolesController.list({}).then(roles => {
+  rolesController.list().then(roles => {
     res.send({ items: roles, total: roles.length })
   })
 });

@@ -32,7 +32,7 @@ router.get('/:id', isAuthenticated, function (req, res, next) {
     })
 });
 
-router.post('/', isAuthenticated, hasRole('user'), function (req, res, next) {
+router.post('/', isAuthenticated, hasRole('waiter'), function (req, res, next) {
   const { name, orders } = req.body
   var _cart = {}
 
@@ -59,7 +59,7 @@ router.post('/', isAuthenticated, hasRole('user'), function (req, res, next) {
 
 });
 
-router.patch('/customer', isAuthenticated, hasRole('user'), function (req, res, next) {
+router.patch('/customer', isAuthenticated, hasRole('waiter'), function (req, res, next) {
   const { cart_id, name, table_id } = req.body
   Promise.all([
     cartsController.list(),
@@ -85,7 +85,7 @@ router.patch('/customer', isAuthenticated, hasRole('user'), function (req, res, 
     })
 })
 
-router.patch('/:id', isAuthenticated, hasRole('user'), function (req, res, next) {
+router.patch('/:id', isAuthenticated, hasRole('waiter'), function (req, res, next) {
   cartsController.update(req.params.id, req.body)
     .then(cart => {
       res.send({ item: cart })

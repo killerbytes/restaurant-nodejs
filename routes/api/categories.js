@@ -43,7 +43,6 @@ router.patch('/sort', isAuthenticated, hasRole('manager'), function (req, res, n
     })
 })
 
-
 router.patch('/:id', isAuthenticated, hasRole('manager'), function (req, res, next) {
   categoriesController.update(req.params.id, req.body)
     .then(category => {
@@ -53,8 +52,6 @@ router.patch('/:id', isAuthenticated, hasRole('manager'), function (req, res, ne
       res.status(400).send(error.response(400, err.message))
     })
 })
-
-
 
 router.delete('/:id', isAuthenticated, hasRole('manager'), function (req, res, next) {
   categoriesController.delete(req.params.id)

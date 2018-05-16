@@ -61,7 +61,7 @@ app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('cookie-parser')());
-app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false, cookie: { maxAge: 5000 } }));
 app.use(validator())
 app.use(passport.initialize());
 app.use(passport.session());
