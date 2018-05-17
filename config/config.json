@@ -1,11 +1,13 @@
 {
   "development": {
-    "username": "root",
-    "password": "root",
+    "username": "bayaws",
+    "password": "bayaws",
     "database": "restaurant_development",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    "logging": false
+    "logging": false,
+    "insecureAuth" : true
+
   },
   "test": {
     "username": "root",
@@ -16,10 +18,11 @@
     "logging": false
   },
   "production": {
-    "username": "root",
-    "password": null,
+    "username": "bayaws",
+    "password": "bayaws",
     "database": "restaurant_production",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "insecureAuth" : true
   }
 }

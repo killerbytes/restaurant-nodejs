@@ -50,7 +50,7 @@ module.exports = {
     })
   },
 
-  create({ discount, amount_paid, cart_id }) {
+  create({ discount, amount_paid, cart_id, notes }) {
     return new Promise((resolve, reject) => {
       cartsController.get(cart_id)
         .then(res => {
@@ -62,10 +62,11 @@ module.exports = {
               total_price: res.total,
               total_amount_due: total_amount_due,
               cart_id,
+              notes,
               user_id: 1
             })
               .then(res => {
-                cartsController.checkout(res.id, true)
+                cartsController.checkout(cart_id, true)
                 return resolve(res)
               })
               .catch(error => reject(error))

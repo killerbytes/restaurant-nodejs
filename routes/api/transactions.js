@@ -40,11 +40,12 @@ router.get('/:id', isAuthenticated, function (req, res, next) {
 
 
 router.post('/', isAuthenticated, hasRole('cashier'), function (req, res, next) {
-  const { discount, amount_paid, cart_id } = req.body
+  const { discount, amount_paid, cart_id, notes } = req.body
   try {
     transactionsController.create({
       discount,
       amount_paid,
+      notes,
       cart_id,
     })
       .then(item => {
